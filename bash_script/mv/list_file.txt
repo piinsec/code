@@ -1,0 +1,13 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 4CF0-DDBF
+
+ Directory of C:\Users\PPN\Desktop\code\bash_script
+
+21/06/2025  16:44    <DIR>          .
+21/06/2025  16:07    <DIR>          ..
+21/06/2025  16:44                 0 list_file.txt
+21/06/2025  16:44               218 list_the_file.bat
+21/06/2025  16:23               133 Open_URL_01.bat
+21/06/2025  16:31               228 Open_URL_02.bat
+               4 File(s)            579 bytes
+               2 Dir(s)  39,880,462,336 bytes free

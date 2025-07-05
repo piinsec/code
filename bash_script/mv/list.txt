@@ -1,0 +1,26 @@
+620206230b766c308493a2d402693fe9-5d4a9093e388b4d58e327d5b081997d10cd44fe9.zip
+Book 1.pdf
+Book 3.pdf
+Book 4.pdf
+Book 5.pdf
+Burp Suite Exam Report v1.pdf
+burp update.pdf
+burp-exam.pdf
+ChatGPT_for_Cybersecurity_Cookbook_-_Clint_Bodungen.pdf
+eWPTXv2-Report.pdf
+EXP-301.pdf
+From Day ZeroTo Zero Day-EA.pdf
+hackerguidetopython.pdf
+Learn-Python-and-Ethical-Hacking-From-Scratch-master.zip
+lshack.cn_2019-02-12_09-29-54.pdf
+Metasploit 2nd Edition.pdf
+Practical_Red_Teaming_Book.pdf
+PYTHON BY WINHTUT 2023_Final.pdf
+Security Monitoring with Wazuh.pdf
+SOC-200 OSDA.pdf
+The Best SOC analyst tools.pdf
+Understanding_a_Payloads_Life.pdf
+unreal tournament.pdf
+Web Hacking Arsenal.pdf
+WEB-300.pdf
+Zhassulan_Zhussupov_Malware_Development_for_Ethical_Hackers_Learn.pdf
