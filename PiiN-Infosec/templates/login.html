@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Account Login</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .login-container {
+        background-color: rgb(52, 52, 52);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 400px;
+        text-align: center;
+      }
+
+      .logo {
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        width: 150px;
+        height: 70px;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 400;
+        margin-bottom: 10px;
+        color: #202124;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        color: #5f6368;
+        margin-bottom: 40px;
+      }
+
+      .input-field {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 13px 15px;
+        font-size: 16px;
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus {
+        border: 2px solid #1a73e8;
+        outline: none;
+      }
+
+      .forgot-email {
+        display: block;
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .forgot-email a {
+        color: #1a73e8;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      .create-account a {
+        color: #1a73e8;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .next-button,
+      .login-button {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+
+      .next-button:hover,
+      .login-button:hover {
+        background-color: #1765cc;
+      }
+
+      .footer {
+        margin-top: 40px;
+        font-size: 12px;
+        color: #5f6368;
+      }
+
+      .language-selector {
+        margin-top: 20px;
+        font-size: 12px;
+      }
+
+      .language-selector select {
+        padding: 5px;
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="logo">
+        <img src="/static/p3.png" alt="piin" />
+      </div>
+
+      <h1 style="color: rgb(255, 255, 255)">Login</h1>
+      <!-- <div class="subtitle">to continue to Piin Security</div> -->
+
+      <div id="email-section">
+        <div class="input-field">
+          <form method="post" action="/login">
+            <input type="text" id="username" placeholder="Email or Username" />
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+            />
+            <input
+              type="submit"
+              id="submit"
+              value="Login"
+              style="
+                width: 70px;
+                height: 37px;
+                background-color: #1765cc;
+                border: none;
+                color: #dadce0;
+              "
+            />
+          </form>
+          <div>{{ user_input | safe }}</div>
+        </div>
+
+        <!-- <div class="button">
+                <div class="login-button">
+                    <a href="#" style="color: #f5f5f5; text-decoration: none; font-size: 14px;">Login</a>
+                </div>
+            </div> -->
+
+        <div class="forgot-email">
+          <a href="#">Forgot email?</a>
+        </div>
+
+        <div class="buttons">
+          <div class="create-account">
+            <a href="#">Create account</a>
+          </div>
+          <button class="next-button" onclick="showPasswordField()">
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="language-selector">
+        <select>
+          <option>English (United States)</option>
+          <option>မြန်မာ (Burmese)</option>
+          <option>Español (Spanish)</option>
+          <option>Français (French)</option>
+          <option>日本語 (Japanese)</option>
+        </select>
+      </div>
+    </div>
+
+    <script>
+      function showPasswordField() {
+        document.getElementById("email-section").classList.add("hidden");
+        document.getElementById("password-section").classList.remove("hidden");
+
+        // If the input contains '@' assume it's email, otherwise username
+        const emailInput = document.getElementById("email").value;
+        const usernameField = document.getElementById("username");
+
+        if (emailInput.includes("@")) {
+          usernameField.classList.add("hidden");
+        } else {
+          usernameField.classList.remove("hidden");
+          usernameField.value = emailInput;
+        }
+      }
+
+      function backToEmail() {
+        document.getElementById("password-section").classList.add("hidden");
+        document.getElementById("email-section").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>

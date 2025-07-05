@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Scanner | SecureShield</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .scan-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .scan-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .scan-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .scan-header p {
+            color: #7f8c8d;
+        }
+        
+        .scan-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .scan-input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .scan-input input, 
+        .scan-input select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .scan-button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .scan-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .scan-options {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .scan-options h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .option-group {
+            margin-bottom: 15px;
+        }
+        
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .scan-results {
+            margin-top: 30px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .results-content {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .vulnerability {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #e74c3c;
+            background-color: #fdecea;
+        }
+        
+        .vulnerability.critical {
+            border-left-color: #e74c3c;
+            background-color: #fdecea;
+        }
+        
+        .vulnerability.high {
+            border-left-color: #f39c12;
+            background-color: #fef5e7;
+        }
+        
+        .vulnerability.medium {
+            border-left-color: #f1c40f;
+            background-color: #fef9e7;
+        }
+        
+        .vulnerability.low {
+            border-left-color: #3498db;
+            background-color: #ebf5fb;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            padding: 10px;
+            background: #fdecea;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            display: none;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background-color: #2c3e50;
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-auth a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid white;
+        }
+        
+        .btn-signup {
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img id="logo" src="/static/p3.png" alt="Logo" height="40">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/scan">Basic Scanner</a></li>
+                <li><a href="/scan_port">Port Scanner</a></li>
+                <li><a href="/scan_website">Website Scanner</a></li>
+                <li><a href="/training">Training</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="/login" class="btn-login">Login</a>
+                <a href="#" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Website Scanner Content -->
+    <div class="container">
+        <div class="scan-container">
+            <div class="scan-header">
+                <h1>Website Vulnerability Scanner</h1>
+                <p>Scan websites for common vulnerabilities and security issues</p>
+            </div>
+            
+            <form id="websiteScanForm" class="scan-form">
+                <div class="scan-input">
+                    <input type="url" id="target" placeholder="Enter website URL (e.g., https://example.com)" required>
+                </div>
+                
+                <button type="submit" class="scan-button">Start Scan</button>
+            </form>
+            
+            <div class="scan-options">
+                <h3>Scan Options</h3>
+                <div class="option-group">
+                    <label>
+                        <input type="checkbox" id="checkSql" checked>
+                        Check for SQL Injection vulnerabilities
+                    </label>
+                </div>
+                <div class="option-group">
+                    <label>
+                        <input type="checkbox" id="checkXss" checked>
+                        Check for Cross-Site Scripting (XSS) vulnerabilities
+                    </label>
+                </div>
+                <div class="option-group">
+                    <label>
+                        <input type="checkbox" id="checkHeaders" checked>
+                        Check security headers
+                    </label>
+                </div>
+                <div class="option-group">
+                    <label>
+                        <input type="checkbox" id="checkTls" checked>
+                        Check TLS/SSL configuration
+                    </label>
+                </div>
+            </div>
+            
+            <div id="errorContainer" class="error-message"></div>
+            <div id="loadingIndicator" class="loading">
+                <p>Scanning website... This may take several minutes</p>
+            </div>
+            
+            <div class="scan-results" id="resultsContainer" style="display: none;">
+                <div class="results-header">
+                    <h3>Scan Results for <span id="resultTarget"></span></h3>
+                    <div id="scanSummary"></div>
+                </div>
+                <div class="results-content" id="resultsContent">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('websiteScanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const target = document.getElementById('target').value.trim();
+            
+            // Validate input
+            if (!target) {
+                showError('Please enter a website URL to scan');
+                return;
+            }
+            
+            // Prepare scan parameters
+            const scanParams = {
+                target: target,
+                options: {
+                    sql: document.getElementById('checkSql').checked,
+                    xss: document.getElementById('checkXss').checked,
+                    headers: document.getElementById('checkHeaders').checked,
+                    tls: document.getElementById('checkTls').checked
+                }
+            };
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('errorContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
+            
+            try {
+                // Send scan request to server
+                const response = await fetch('/scan_website', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(scanParams)
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Scan failed');
+                }
+                
+                // Display results
+                displayResults(data);
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }
+        });
+        
+        function showError(message) {
+            const errorContainer = document.getElementById('errorContainer');
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block';
+        }
+        
+        function displayResults(data) {
+            document.getElementById('resultTarget').textContent = data.target;
+            
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = '';
+            
+            // Display scan summary
+            const scanSummary = document.getElementById('scanSummary');
+            scanSummary.innerHTML = `
+                <span>Critical: <strong style="color: #e74c3c">${data.summary.critical || 0}</strong></span>
+                <span>High: <strong style="color: #f39c12">${data.summary.high || 0}</strong></span>
+                <span>Medium: <strong style="color: #f1c40f">${data.summary.medium || 0}</strong></span>
+                <span>Low: <strong style="color: #3498db">${data.summary.low || 0}</strong></span>
+            `;
+            
+            // Display vulnerabilities
+            if (data.vulnerabilities && data.vulnerabilities.length > 0) {
+                data.vulnerabilities.forEach(vuln => {
+                    const vulnElement = document.createElement('div');
+                    vulnElement.className = `vulnerability ${vuln.severity}`;
+                    vulnElement.innerHTML = `
+                        <h4>${vuln.name} (${vuln.severity})</h4>
+                        <p>${vuln.description}</p>
+                        ${vuln.recommendation ? `<p><strong>Recommendation:</strong> ${vuln.recommendation}</p>` : ''}
+                        ${vuln.url ? `<p><strong>Affected URL:</strong> ${vuln.url}</p>` : ''}
+                    `;
+                    resultsContent.appendChild(vulnElement);
+                });
+            } else {
+                resultsContent.innerHTML = '<p>No vulnerabilities found.</p>';
+            }
+            
+            // Display additional results
+            if (data.security_headers) {
+                const headersSection = document.createElement('div');
+                headersSection.innerHTML = '<h4>Security Headers</h4>';
+                
+                const headersList = document.createElement('ul');
+                Object.entries(data.security_headers).forEach(([header, value]) => {
+                    const item = document.createElement('li');
+                    item.innerHTML = `<strong>${header}:</strong> ${value || 'Not set'}`;
+                    headersList.appendChild(item);
+                });
+                
+                headersSection.appendChild(headersList);
+                resultsContent.appendChild(headersSection);
+            }
+            
+            if (data.tls_info) {
+                const tlsSection = document.createElement('div');
+                tlsSection.innerHTML = '<h4>TLS/SSL Information</h4>';
+                
+                const tlsList = document.createElement('ul');
+                Object.entries(data.tls_info).forEach(([key, value]) => {
+                    const item = document.createElement('li');
+                    item.innerHTML = `<strong>${key}:</strong> ${value}`;
+                    tlsList.appendChild(item);
+                });
+                
+                tlsSection.appendChild(tlsList);
+                resultsContent.appendChild(tlsSection);
+            }
+            
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

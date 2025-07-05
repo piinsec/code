@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nmap Scanner</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation Bar Styles - Fixed */
+        nav {
+            background-color: #2c3e50;
+            width: 100%;
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-menu li a:hover {
+            color: #3498db;
+        }
+        
+        .nav-auth {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-login, .btn-signup {
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-left: 10px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            color: white;
+            background-color: transparent;
+            border: 1px solid white;
+        }
+        
+        .btn-login:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .btn-signup {
+            color: white;
+            background-color: #3498db;
+            border: 1px solid #3498db;
+        }
+        
+        .btn-signup:hover {
+            background-color: #2980b9;
+        }
+        
+        .logo img {
+            height: 40px;
+            display: block;
+        }
+        
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        #scanForm {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        #scanForm input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        #scanForm button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        #scanForm button:hover {
+            background-color: #45a049;
+        }
+        
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: pre-wrap;
+            font-family: monospace;
+            min-height: 100px;
+        }
+        
+        .error {
+            color: #d32f2f;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .nav-menu {
+                margin: 10px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-menu li {
+                margin: 5px 10px;
+            }
+            
+            .nav-auth {
+                margin-top: 10px;
+            }
+            
+            #scanForm input[type="text"] {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            #scanForm button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img id="logo" src="/static/p3.png" alt="Logo" height="40">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/scan">Basic Scanner</a></li>
+                <li><a href="/scan_port">Port Scanner</a></li>
+                <li><a href="/scan_website">Website Scanner</a></li>
+                <li><a href="/training">Training</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="/login" class="btn-login">Login</a>
+                <a href="#" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Nmap Scanner Tool</h1>
+        
+        <form id="scanForm">
+            <input type="text" id="target" placeholder="Enter domain or IP (e.g., example.com)" required>
+            <button type="submit">Scan Now</button>
+        </form>
+        
+        <div id="results">Scan results will appear here...</div>
+    </main>
+
+    <script>
+        document.getElementById('scanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const target = document.getElementById('target').value.trim();
+            const resultsDiv = document.getElementById('results');
+            
+            if (!target) {
+                resultsDiv.innerHTML = '<span class="error">Please enter a valid target</span>';
+                return;
+            }
+            
+            resultsDiv.textContent = 'Scanning... Please wait...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('target', target);
+                
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+                
+                if (data.error) {
+                    resultsDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
+                } else {
+                    resultsDiv.textContent = `Scan results for ${data.target}:\n\n${data.result}`;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<span class="error">Failed to scan: ${error.message}</span>`;
+            }
+        });
+    </script>
+</body>
+</html>

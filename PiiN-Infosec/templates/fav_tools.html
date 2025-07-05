@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>စမ်းသပ်ရေးကရိယာများ</title>
+    <style>
+      /* ====== Global Styles ====== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* ====== Header Styles ====== */
+      header {
+        background-color: #1a1a1a;
+        color: #4fc3f7;
+        padding: 1.5rem 0;
+        text-align: center;
+        border-bottom: 1px solid #2d2d2d;
+      }
+
+      .logo {
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px rgba(79, 195, 247, 0.3);
+      }
+
+      .tagline {
+        font-size: 1rem;
+        opacity: 0.8;
+        color: #b0bec5;
+      }
+
+      /* ====== Navigation ====== */
+      nav {
+        background-color: #1e1e1e;
+        padding: 0.7rem 0;
+        border-bottom: 1px solid #2d2d2d;
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin: 0 1.2rem;
+      }
+
+      nav ul li a {
+        color: #b0bec5;
+        text-decoration: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      nav ul li a:hover {
+        background-color: #2d2d2d;
+        color: #4fc3f7;
+      }
+
+      /* ====== Main Content ====== */
+      .container {
+        max-width: 1200px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem;
+      }
+
+      .hero {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2.5rem;
+        background-color: #1e1e1e;
+        border-radius: 8px;
+        border: 1px solid #2d2d2d;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero h1 {
+        margin-bottom: 1.2rem;
+        color: #4fc3f7;
+        font-size: 2rem;
+      }
+
+      .hero p {
+        color: #b0bec5;
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      /* ====== Tools Section ====== */
+      .tools-section {
+        margin-top: 3rem;
+      }
+
+      .section-title {
+        margin-bottom: 2rem;
+        color: #4fc3f7;
+        text-align: center;
+        font-size: 1.8rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, #4fc3f7, #01579b);
+        border-radius: 3px;
+      }
+
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+      }
+
+      .tool-card {
+        background-color: #1e1e1e;
+        border-radius: 8px;
+        padding: 1.8rem;
+        border: 1px solid #2d2d2d;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tool-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #4fc3f7, #01579b);
+      }
+
+      .tool-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        border-color: #4fc3f7;
+      }
+
+      .tool-card h3 {
+        color: #4fc3f7;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+
+      .tool-card p {
+        margin-bottom: 1.5rem;
+        color: #b0bec5;
+        line-height: 1.6;
+      }
+
+      /* ====== Buttons ====== */
+      .btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #4fc3f7, #01579b);
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 10px rgba(1, 87, 155, 0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(1, 87, 155, 0.4);
+        background: linear-gradient(135deg, #5fcbff, #0268c7);
+      }
+
+      /* ====== Footer ====== */
+      footer {
+        background-color: #1a1a1a;
+        color: #b0bec5;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 4rem;
+        border-top: 1px solid #2d2d2d;
+      }
+
+      .footer-text {
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .footer-disclaimer {
+        font-size: 0.85rem;
+        opacity: 0.7;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.5;
+      }
+
+      /* ====== Responsive Design ====== */
+      @media (max-width: 768px) {
+        nav ul {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        nav ul li {
+          margin: 0.5rem 0;
+          width: 100%;
+          text-align: center;
+        }
+
+        nav ul li a {
+          display: block;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .hero {
+          padding: 1.5rem;
+        }
+
+        .hero h1 {
+          font-size: 1.6rem;
+        }
+
+        .section-title {
+          font-size: 1.5rem;
+        }
+
+        .tools-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ====== Header Section ====== -->
+    <header>
+      <div class="logo">PiiN Security</div>
+      <div class="tagline">စုဆောင်းထားသောကိရိယာများ</div>
+    </header>
+
+    <!-- ====== Navigation ====== -->
+
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Tools</a></li>
+        <li><a href="#">Training</a></li>
+        <li><a href="#">About Me</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- ====== Main Content ====== -->
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <h1>ဝက်ဘ်ဆိုက်နှင့် ကွန်ရက်လုံခြုံရေးကို စမ်းသပ်ရန် ကိရိယာများ</h1>
+        <p>
+          ကျွန်ုပ်ရဲ့ အခမဲ့ အွန်လိုင်းကိရိယာများဖြင့် သင့်လုံခြုံရေးကို
+          စစ်ဆေးကြည့်ပါ။
+        </p>
+      </section>
+
+      <!-- Tools Section -->
+      <section class="tools-section">
+        <h2 class="section-title">Favourite Tools</h2>
+
+        <div class="tools-grid">
+          <!-- Tool Card 1 -->
+          <div class="tool-card">
+            <h3>Website Scanner</h3>
+            <p>Website ၏ လုံခြုံရေးချို့ယွင်းချက်များကို ရှာဖွေပါ။</p>
+            <a href="#" class="btn">အသုံးပြုရန်</a>
+          </div>
+
+          <!-- Tool Card 2 -->
+          <div class="tool-card">
+            <h3>Port Scanner</h3>
+            <p>Port များကို စစ်ဆေးပါ။</p>
+            <a href="#" class="btn">အသုံးပြုရန်</a>
+          </div>
+
+          <!-- Tool Card 3 -->
+          <div class="tool-card">
+            <h3>SQL Injection Tester</h3>
+            <p>SQL injection ချို့ယွင်းချက်များကို စစ်ဆေးပါ။</p>
+            <a href="#" class="btn">အသုံးပြုရန်</a>
+          </div>
+
+          <!-- Tool Card 4 -->
+          <div class="tool-card">
+            <h3>Subdomain Finder</h3>
+            <p>Subdomain များကို ရှာဖွေပါ။</p>
+            <a href="#" class="btn">အသုံးပြုရန်</a>
+          </div>
+
+          <!-- Tool Card 5 -->
+          <div class="tool-card">
+            <h3>SSL Checker</h3>
+            <p>ဝက်ဘ်ဆိုက်၏ SSL/TLS ဖွဲ့စည်းမှုကို စစ်ဆေးပါ။</p>
+            <a href="#" class="btn">အသုံးပြုရန်</a>
+          </div>
+
+          <!-- Tool Card 6 -->
+          <div class="tool-card">
+            <h3>Password Cracker</h3>
+            <p>အားနည်းသောစကားဝှက်များကို စစ်ဆေးပါ။</p>
+            <a href="#" class="btn">အသုံးပြုရန်</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ====== Footer ====== -->
+    <footer>
+      <p class="footer-text">
+        &copy; 2023 MyPenTestTools. All rights reserved.
+      </p>
+      <p class="footer-disclaimer">
+        ဤဝက်ဘ်ဆိုက်ကို ပညာသင်ကြားရေးအတွက်သာ အသုံးပြုပါသည်။
+      </p>
+    </footer>
+  </body>
+</html>

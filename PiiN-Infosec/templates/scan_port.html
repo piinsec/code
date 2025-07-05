@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner | SecureShield</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .scan-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .scan-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .scan-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .scan-form {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .scan-input {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .scan-input input, 
+        .scan-input select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .scan-button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .scan-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .scan-results {
+            margin-top: 30px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .results-content {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            padding: 10px;
+            background: #fdecea;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            display: none;
+        }
+        /* Navigation Styles */
+        nav {
+            background-color: #2c3e50;
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-auth a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid white;
+        }
+        
+        .btn-signup {
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img id="logo" src="/static/p3.png" alt="Logo" height="40">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/scan">Basic Scanner</a></li>
+                <li><a href="/scan_port">Port Scanner</a></li>
+                <li><a href="/scan_website">Website Scanner</a></li>
+                <li><a href="/training">Training</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="/login" class="btn-login">Login</a>
+                <a href="#" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Port Scanner Content -->
+    <div class="container">
+        <div class="scan-container">
+            <div class="scan-header">
+                <h1>Advanced Port Scanner</h1>
+                <p>Scan for open ports on any target host</p>
+            </div>
+            
+            <form id="portScanForm" class="scan-form">
+                <div class="scan-input">
+                    <input type="text" id="target" placeholder="Enter IP or hostname (e.g., 192.168.1.1)" required>
+                </div>
+                
+                <div class="scan-input">
+                    <select id="scanType">
+                        <option value="quick">Quick Scan (Top 100 Ports)</option>
+                        <option value="full">Full Scan (All Ports)</option>
+                        <option value="custom">Custom Port Range</option>
+                    </select>
+                </div>
+                
+                <div class="scan-input" id="customPortsContainer" style="display: none;">
+                    <input type="text" id="customPorts" placeholder="Enter ports (e.g., 80,443 or 20-30)">
+                </div>
+                
+                <button type="submit" class="scan-button">Start Scan</button>
+            </form>
+            
+            <div id="errorContainer" class="error-message" style="display: none;"></div>
+            <div id="loadingIndicator" class="loading" style="display: none;">
+                <p>Scanning in progress... Please wait</p>
+            </div>
+            
+            <div class="scan-results" id="resultsContainer" style="display: none;">
+                <div class="results-header">
+                    <h3>Scan Results for <span id="resultTarget"></span></h3>
+                </div>
+                <div class="results-content" id="resultsContent">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show/hide custom ports field based on scan type
+        document.getElementById('scanType').addEventListener('change', function() {
+            const customPortsContainer = document.getElementById('customPortsContainer');
+            customPortsContainer.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+        
+        // Handle form submission
+        document.getElementById('portScanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const target = document.getElementById('target').value.trim();
+            const scanType = document.getElementById('scanType').value;
+            const customPorts = document.getElementById('customPorts').value.trim();
+            
+            // Validate input
+            if (!target) {
+                showError('Please enter a target to scan');
+                return;
+            }
+            
+            if (scanType === 'custom' && !customPorts) {
+                showError('Please specify ports to scan');
+                return;
+            }
+            
+            // Prepare scan parameters
+            const scanParams = {
+                target: target,
+                scan_type: scanType
+            };
+            
+            if (scanType === 'custom') {
+                scanParams.ports = customPorts;
+            }
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('errorContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
+            
+            try {
+                // Send scan request to server
+                const response = await fetch('/scan_port', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(scanParams)
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Scan failed');
+                }
+                
+                // Display results
+                displayResults(data);
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }
+        });
+        
+        function showError(message) {
+            const errorContainer = document.getElementById('errorContainer');
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block';
+        }
+        
+        function displayResults(data) {
+            document.getElementById('resultTarget').textContent = data.target;
+            
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = '';
+            
+            if (data.results && data.results.length > 0) {
+                data.results.forEach(port => {
+                    const portItem = document.createElement('div');
+                    portItem.innerHTML = `Port ${port.port}: ${port.status} (${port.service || 'unknown service'})`;
+                    resultsContent.appendChild(portItem);
+                });
+            } else if (data.raw_output) {
+                resultsContent.textContent = data.raw_output;
+            } else {
+                resultsContent.textContent = 'No results found';
+            }
+            
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

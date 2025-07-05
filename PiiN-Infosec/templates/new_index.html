@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecureShield - Cybersecurity Solutions</title>
+    <style>
+      /* ====== Global Styles ====== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #0a0a0a;
+        color: #e0e0e0;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3498db, #2c3e50);
+        color: white;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #2980b9, #1a252f);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+      }
+
+      /* ====== Navigation Bar ====== */
+      nav {
+        background-color: #121212;
+        padding: 15px 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid #2d2d2d;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 40px;
+        filter: brightness(0) invert(1);
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-menu li {
+        margin: 0 15px;
+        position: relative;
+      }
+
+      .nav-menu li a {
+        color: #b0bec5;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        padding: 8px 0;
+      }
+
+      .nav-menu li a:hover {
+        color: #3498db;
+      }
+
+      .nav-auth a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: all 0.3s;
+      }
+
+      .btn-login {
+        background-color: transparent;
+        border: 1px solid #3498db;
+        color: #3498db;
+      }
+
+      .btn-login:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+      }
+
+      .btn-signup {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      .btn-signup:hover {
+        background: linear-gradient(135deg, #2980b9, #2472a4);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+      }
+
+      /* ====== Dropdown Menu ====== */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #1e1e1e;
+        min-width: 220px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+        border-radius: 6px;
+        border: 1px solid #2d2d2d;
+        top: 100%;
+        left: 0;
+        overflow: hidden;
+      }
+
+      .dropdown-content a {
+        color: #b0bec5;
+        padding: 12px 16px;
+        display: block;
+        transition: all 0.3s;
+        border-bottom: 1px solid #2d2d2d;
+      }
+
+      .dropdown-content a:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #2c3e50;
+        color: #3498db;
+        padding-left: 20px;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      /* ====== Header Section ====== */
+      header {
+        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+          url("https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
+            no-repeat center center/cover;
+        height: 90vh;
+        color: white;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin-top: 70px;
+      }
+
+      .header-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .header-content h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #3498db, #4fc3f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.2;
+      }
+
+      .header-content p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #b0bec5;
+      }
+
+      /* ====== Main Content ====== */
+      .main-content {
+        padding: 80px 0;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: #3498db;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title h2::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, #3498db, #4fc3f7);
+        border-radius: 3px;
+      }
+
+      .section-title p {
+        color: #b0bec5;
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+      }
+
+      .features {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+      }
+
+      .feature-box {
+        flex: 0 0 calc(33.333% - 30px);
+        background: #121212;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        border: 1px solid #2d2d2d;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #3498db, #4fc3f7);
+      }
+
+      .feature-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        border-color: #3498db;
+      }
+
+      .feature-box h3 {
+        font-size: 1.5rem;
+        margin: 20px 0;
+        color: #e0e0e0;
+      }
+
+      .feature-box p {
+        color: #b0bec5;
+        margin-bottom: 25px;
+        line-height: 1.7;
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        color: #3498db;
+      }
+
+      /* ====== Contact Section ====== */
+      .contact {
+        background-color: #121212;
+        padding: 80px 0;
+        border-top: 1px solid #2d2d2d;
+        border-bottom: 1px solid #2d2d2d;
+      }
+
+      .contact-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .contact-info {
+        flex: 0 0 40%;
+      }
+
+      .contact-info h3 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #3498db;
+      }
+
+      .contact-info p {
+        margin-bottom: 30px;
+        color: #b0bec5;
+        line-height: 1.7;
+      }
+
+      .contact-info p:last-child {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      .contact-form {
+        flex: 0 0 55%;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 500;
+        color: #b0bec5;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 14px;
+        border: 1px solid #2d2d2d;
+        border-radius: 4px;
+        background-color: #1e1e1e;
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+      }
+
+      .form-group textarea {
+        height: 150px;
+        resize: vertical;
+      }
+
+      ::placeholder {
+        color: #7f8c8d;
+      }
+
+      /* ====== Footer ====== */
+      footer {
+        background-color: #0a0a0a;
+        padding: 40px 0;
+        text-align: center;
+        border-top: 1px solid #2d2d2d;
+      }
+
+      footer p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      /* ====== Responsive Design ====== */
+      @media (max-width: 992px) {
+        .feature-box {
+          flex: 0 0 calc(50% - 20px);
+        }
+
+        .contact-info,
+        .contact-form {
+          flex: 0 0 100%;
+        }
+
+        .contact-form {
+          margin-top: 40px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+        }
+
+        .nav-menu {
+          margin: 20px 0;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .nav-menu li {
+          margin: 10px;
+        }
+
+        .nav-auth {
+          margin-top: 15px;
+        }
+
+        header {
+          height: auto;
+          padding: 100px 0;
+        }
+
+        .header-content h1 {
+          font-size: 2.2rem;
+        }
+
+        .feature-box {
+          flex: 0 0 100%;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .header-content h1 {
+          font-size: 1.8rem;
+        }
+
+        .section-title h2 {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav>
+      <div class="container nav-container">
+        <div class="logo">
+          <img
+            id="logo"
+            src="/static/p3.png"
+            alt="SecureShield Logo"
+            height="40"
+          />
+        </div>
+        <ul class="nav-menu">
+          <li class="dropdown">
+            <a href="#">Tools</a>
+            <div class="dropdown-content">
+              <a href="/scan">Website Scanner</a>
+              <a href="/scan_port">Port Scanner</a>
+              <a href="/scan_website">SQL Injection Tester</a>
+              <a href="/scan_subdomain">Subdomain Finder</a>
+              <a href="/scan_directory">Directory Scanner</a>
+            </div>
+          </li>
+          <li><a href="/favtools">Favourite Tools</a></li>
+          <li><a href="/training">Training</a></li>
+          <li><a href="#">Our Service</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+        <div class="nav-auth">
+          <a href="/login" class="btn btn-login">Login</a>
+          <a href="#" class="btn btn-signup">Sign Up</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1>Advanced Cybersecurity Solutions</h1>
+          <p>
+            Protecting your digital assets with cutting-edge security
+            technologies and expert services
+          </p>
+          <a href="#" class="btn btn-primary">Get Protected Today</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="main-content">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Cybersecurity Services</h2>
+          <p>
+            We provide comprehensive security solutions to protect your business
+            from evolving cyber threats
+          </p>
+        </div>
+
+        <div class="features">
+          <!-- About Section -->
+          <div class="feature-box">
+            <div class="feature-icon">🔒</div>
+            <h3>About Us</h3>
+            <p>
+              SecureShield is a leading cybersecurity firm with over 10 years of
+              experience in protecting businesses from digital threats.
+            </p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+          </div>
+
+          <!-- Our Services Section -->
+          <div class="feature-box">
+            <div class="feature-icon">🛡️</div>
+            <h3>Our Services</h3>
+            <p>
+              We offer a full range of security services including penetration
+              testing, vulnerability assessments, and 24/7 monitoring.
+            </p>
+            <a href="#" class="btn btn-primary">View Services</a>
+          </div>
+
+          <!-- Latest Projects Section -->
+          <div class="feature-box">
+            <div class="feature-icon">🚀</div>
+            <h3>Latest Projects</h3>
+            <p>
+              See our recent work securing financial institutions, healthcare
+              providers, and government agencies.
+            </p>
+            <a href="#" class="btn btn-primary">View Projects</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+      <div class="container contact-container">
+        <div class="contact-info">
+          <h3>Contact Us</h3>
+          <p>
+            Have questions about our services or need immediate assistance? Our
+            team is ready to help you strengthen your security posture.
+          </p>
+          <p>
+            Email: info@secureshield.com<br />
+            Phone: +1 (555) 123-4567<br />
+            Address: 123 Security Ave, Cyber City
+          </p>
+        </div>
+        <div class="contact-form">
+          <form>
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" placeholder="Enter your name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" placeholder="Enter your email" />
+            </div>
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea
+                id="message"
+                placeholder="How can we help you?"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 SecureShield Cybersecurity. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

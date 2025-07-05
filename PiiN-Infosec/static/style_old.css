@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+section{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    scroll-snap-align: start;
+}
+.header {
+    background-image: url('/static/c.jpg') ;
+    background-size: cover;
+    background-attachment: fixed; /*create the parallax effect */
+    background-color: #bdc3da;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+.profile-image {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+}
+.content-selection {
+    position: relative; /* added this to position the pseudo-element relative */
+    color: black; /* Text color*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* .content-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;    
+    background-image: url('/static/bg1.jpg');
+    background-size: cover;
+    background-attachment: scroll;
+    opacity: 0.2;
+} */
+
+.content-block{
+    flex-basis: 30%;
+    padding: 20px;
+    opacity: 1;
+}
+
+.contact {
+    background-image: url('/static/v.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    color: black;
+    padding-block-end: 40px 0;
+}

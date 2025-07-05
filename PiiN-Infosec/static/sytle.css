@@ -1,0 +1,279 @@
+/* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #1a1b1c;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1a252f;
+        }
+        
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2c3e50;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #3498db;
+            border-radius: 4px;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Navigation Bar Styles */
+        nav {
+            background-color: #2c3e50;
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-auth a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            border: 1px solid white;
+        }
+        
+        .btn-signup {
+            background-color: #3498db;
+        }
+        
+        /* Header Section */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/static/c.jpg') no-repeat center center/cover;
+            height: 80vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .header-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        
+        .feature-box {
+            flex: 0 0 calc(33.333% - 30px);
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-box h3 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        
+        .feature-box p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #3498db;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0;
+        }
+        
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .contact-info {
+            flex: 0 0 40%;
+        }
+        
+        .contact-info h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .contact-form {
+            flex: 0 0 55%;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a252f;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer p {
+            opacity: 0.7;
+        }

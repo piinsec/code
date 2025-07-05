@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecureShield - Cybersecurity Training</title>
+    <style>
+      /* ====== Global Styles ====== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* ====== Header Styles ====== */
+      header {
+        background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid #2d2d2d;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #4fc3f7, #3498db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        color: #b0bec5;
+      }
+
+      /* ====== Lesson Card Styles ====== */
+      .lesson {
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        margin-bottom: 40px;
+        border: 1px solid #2d2d2d;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .lesson:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        border-color: #3498db;
+      }
+
+      .lesson h2 {
+        color: #4fc3f7;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+      }
+
+      .lesson-content {
+        margin-top: 20px;
+      }
+
+      .lesson-content p {
+        margin-bottom: 15px;
+        color: #b0bec5;
+        line-height: 1.7;
+      }
+
+      .lesson-content h3 {
+        color: #e0e0e0;
+        margin: 20px 0 15px;
+        font-size: 1.3rem;
+      }
+
+      .lesson-content ul {
+        margin: 15px 0 20px 25px;
+      }
+
+      .lesson-content li {
+        margin-bottom: 10px;
+        color: #b0bec5;
+      }
+
+      .lesson-content strong {
+        color: #e0e0e0;
+      }
+
+      /* ====== Code Block Styles ====== */
+      .code-block {
+        background-color: #1a1a1a;
+        border-left: 4px solid #3498db;
+        padding: 20px;
+        font-family: "Courier New", Courier, monospace;
+        overflow-x: auto;
+        margin: 20px 0;
+        border-radius: 0 5px 5px 0;
+        color: #e0e0e0;
+        line-height: 1.5;
+      }
+
+      /* ====== Warning Box Styles ====== */
+      .warning {
+        background-color: #332b00;
+        border-left: 4px solid #ffc107;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 0 5px 5px 0;
+        color: #ffc107;
+      }
+
+      .warning strong {
+        color: #ffc107;
+      }
+
+      /* ====== Button Styles ====== */
+      .btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 15px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+      }
+
+      .btn:hover {
+        background: linear-gradient(135deg, #2980b9, #2472a4);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      /* ====== Responsive Design ====== */
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+
+        header p {
+          font-size: 1rem;
+        }
+
+        .lesson h2 {
+          font-size: 1.5rem;
+        }
+
+        .code-block,
+        .warning {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Cybersecurity Training</h1>
+      <p>လုံခြုံရေးနည်းပညာဆိုင်ရာ အခြေခံသင်ခန်းစာများ</p>
+    </header>
+
+    <div class="lesson">
+      <h2>သင်ခန်းစာ ၁ - Password Cracking အခြေခံများ</h2>
+      <div class="lesson-content">
+        <p>
+          Password cracking ဆိုတာက အားနည်းတဲ့ password တွေကို
+          ခန့်မှန်းဖောက်ထွင်းနည်းပါ။ ethical hacking မှာ system ရဲ့
+          အားနည်းချက်ကို စမ်းသပ်ဖို့အတွက် အသုံးပြုပါတယ်။
+        </p>
+
+        <h3>အသုံးများတဲ့ password cracking နည်းလမ်းများ:</h3>
+        <ul>
+          <li>
+            <strong>Brute Force Attack</strong> - ဖြစ်နိုင်သမျှ combination
+            အားလုံးကို စမ်းသပ်ခြင်း
+          </li>
+          <li>
+            <strong>Dictionary Attack</strong> - အသုံးများတဲ့ password list
+            သုံးပြီး စမ်းသပ်ခြင်း
+          </li>
+          <li>
+            <strong>Rainbow Table Attack</strong> - hash ကနေ original password
+            ကို ပြန်ရှာခြင်း
+          </li>
+        </ul>
+
+        <div class="warning">
+          <strong>သတိပြုရန်:</strong> ဒီနည်းပညာတွေကို သင့်ကိုယ်ပိုင် system
+          ဒါမှမဟုတ် permission ရထားတဲ့ system မှာပဲ စမ်းသပ်ပါ။ တခြားသူတွေရဲ့
+          system ကို ခွင့်ပြုချက်မရှိဘဲ စမ်းသပ်ရင် တရားဥပဒေအရ
+          အရေးယူခံရနိုင်ပါတယ်။
+        </div>
+
+        <h3>John the Ripper သုံးပြီး password crack လုပ်နည်း (နမူနာ):</h3>
+        <div class="code-block">
+          # John the Ripper ကို install လုပ်ပါ<br />
+          sudo apt install john<br /><br />
+          # Password file ကို crack လုပ်ပါ<br />
+          john --wordlist=/usr/share/wordlists/rockyou.txt hashed_passwords.txt
+        </div>
+
+        <a href="#" class="btn">အသေးစိတ်လေ့လာရန်</a>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h2>သင်ခန်းစာ ၂ - SQL Injection အခြေခံများ</h2>
+      <div class="lesson-content">
+        <p>
+          SQL Injection ဆိုတာ website တစ်ခုရဲ့ database ကို ထိပါးနိုင်တဲ့
+          အခြေခံကျတဲ့ web application အားနည်းချက်တစ်ခုပါ။
+        </p>
+
+        <h3>SQL Injection အမျိုးအစားများ:</h3>
+        <ul>
+          <li>
+            <strong>Error-based SQLi</strong> - Database error messages ကနေ
+            information ရယူခြင်း
+          </li>
+          <li>
+            <strong>Union-based SQLi</strong> - UNION SQL operator သုံးပြီး data
+            ရယူခြင်း
+          </li>
+          <li>
+            <strong>Blind SQLi</strong> - Error မပြဘဲ true/false response ကို
+            စစ်ဆေးခြင်း
+          </li>
+        </ul>
+
+        <h3>နမူနာ SQL Injection:</h3>
+        <div class="code-block">
+          -- ရိုးရိုး login query<br />
+          SELECT * FROM users WHERE username='admin' AND password='12345'<br /><br />
+          -- SQL Injection သုံးပြီး bypass လုပ်နည်း<br />
+          username: admin' --<br />
+          password: [anything]<br /><br />
+          -- Resulting query:<br />
+          SELECT * FROM users WHERE username='admin' --' AND
+          password='[anything]'
+        </div>
+
+        <div class="warning">
+          <strong>ကာကွယ်နည်း:</strong> Prepared statements သုံးပြီး SQL
+          Injection ကို ကာကွယ်နိုင်ပါတယ်။
+        </div>
+
+        <a href="#" class="btn">အသေးစိတ်လေ့လာရန်</a>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h2>သင်ခန်းစာ ၃ - Network Scanning with Nmap</h2>
+      <div class="lesson-content">
+        <p>
+          Nmap (Network Mapper) ဆိုတာ network discovery နဲ့ security auditing
+          အတွက် အသုံးဝင်တဲ့ tool တစ်ခုပါ။
+        </p>
+
+        <h3>Nmap အခြေခံ commands:</h3>
+        <ul>
+          <li>
+            <strong>Host Discovery</strong> - Network ပေါ်က live hosts တွေကို
+            ရှာဖွေခြင်း
+          </li>
+          <li>
+            <strong>Port Scanning</strong> - Open ports တွေကို စစ်ဆေးခြင်း
+          </li>
+          <li>
+            <strong>Service Detection</strong> - Running services တွေကို
+            ဖော်ထုတ်ခြင်း
+          </li>
+          <li>
+            <strong>OS Detection</strong> - Operating system ကို ခန့်မှန်းခြင်း
+          </li>
+        </ul>
+
+        <h3>Nmap နမူနာ commands:</h3>
+        <div class="code-block">
+          # Basic scan<br />
+          nmap 192.168.1.1<br /><br />
+          # Scan specific ports<br />
+          nmap -p 80,443 192.168.1.1<br /><br />
+          # Aggressive scan (OS and service detection)<br />
+          nmap -A 192.168.1.1<br /><br />
+          # Scan entire subnet<br />
+          nmap 192.168.1.0/24
+        </div>
+
+        <div class="warning">
+          <strong>သတိပြုရန်:</strong> သင့်ကိုယ်ပိုင် network မှာပဲ scan လုပ်ပါ။
+          တခြားသူတွေရဲ့ network ကို ခွင့်ပြုချက်မရှိဘဲ scan လုပ်ရင် ဥပဒေအရ
+          အရေးယူခံရနိုင်ပါတယ်။
+        </div>
+
+        <a href="#" class="btn">အသေးစိတ်လေ့လာရန်</a>
+      </div>
+    </div>
+  </body>
+</html>
