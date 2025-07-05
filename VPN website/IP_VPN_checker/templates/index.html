@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberShield - Advanced IP/VPN Checker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+      :root {
+        --bg-dark: #0f0f13;
+        --bg-darker: #1a1a23;
+        --bg-card: #252535;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0bf;
+        --accent-primary: #8a6eff;
+        --accent-danger: #ff5e7d;
+        --accent-success: #2ce8a5;
+        --accent-info: #5d9cff;
+        --accent-warning: #ffb85d;
+        --border-color: #3a3a4a;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-primary);
+        background-image: radial-gradient(
+          circle at 25% 25%,
+          rgba(138, 110, 255, 0.1) 0%,
+          transparent 50%
+        );
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        min-height: 100vh;
+      }
+
+      .card {
+        background-color: var(--bg-card);
+        border-color: var(--border-color);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-header {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-bottom-color: var(--border-color);
+        padding: 1.25rem 1.5rem;
+      }
+
+      .table {
+        color: var(--text-primary);
+        margin-bottom: 0;
+      }
+
+      .table-hover tbody tr {
+        transition: background-color 0.2s ease;
+      }
+
+      .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+      }
+
+      .form-control,
+      .form-control:focus {
+        background-color: var(--bg-darker);
+        color: var(--text-primary);
+        border-color: var(--border-color);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(138, 110, 255, 0.25);
+        border-color: var(--accent-primary);
+      }
+
+      .btn {
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background-color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background-color: #7a5af5;
+        border-color: #7a5af5;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(138, 110, 255, 0.3);
+      }
+
+      .btn-outline-secondary {
+        color: var(--text-secondary);
+        border-color: var(--border-color);
+      }
+
+      .btn-outline-secondary:hover {
+        background-color: var(--bg-darker);
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+      }
+
+      .vpn-detected {
+        color: var(--accent-danger);
+        font-weight: bold;
+      }
+      .no-vpn {
+        color: var(--accent-success);
+        font-weight: bold;
+      }
+      .ip-type-public {
+        color: var(--accent-info);
+      }
+      .ip-type-private {
+        color: var(--text-secondary);
+      }
+      .ip-type-localhost {
+        color: var(--accent-primary);
+      }
+
+      .modal-content {
+        background-color: var(--bg-card);
+        border-color: var(--border-color);
+        border-radius: 12px;
+      }
+
+      .modal-header,
+      .modal-footer {
+        border-color: var(--border-color);
+      }
+
+      .nav-tabs .nav-link {
+        color: var(--text-secondary);
+        border-color: transparent;
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .nav-tabs .nav-link.active {
+        background-color: var(--bg-card);
+        color: var(--accent-primary);
+        border-color: var(--border-color) var(--border-color) var(--bg-card);
+        font-weight: 600;
+      }
+
+      .nav-tabs {
+        border-bottom-color: var(--border-color);
+      }
+
+      #detailsModal .modal-body dl {
+        display: grid;
+        grid-template-columns: max-content auto;
+        gap: 0.75rem 1.5rem;
+      }
+
+      #detailsModal .modal-body dt {
+        font-weight: 600;
+        color: var(--accent-primary);
+      }
+
+      #detailsModal .modal-body dd {
+        margin-bottom: 0;
+        word-break: break-word;
+      }
+
+      .badge {
+        font-weight: 600;
+        padding: 0.35em 0.65em;
+        border-radius: 6px;
+        font-size: 0.85em;
+      }
+
+      .badge-vpn {
+        background-color: var(--accent-danger);
+      }
+
+      .badge-proxy {
+        background-color: var(--accent-warning);
+        color: #000;
+      }
+
+      .badge-tor {
+        background-color: #8c68cd;
+      }
+
+      .badge-clean {
+        background-color: var(--accent-success);
+        color: #000;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-darker);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent-primary);
+        border-radius: 4px;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.3s ease forwards;
+      }
+
+      /* Pulse animation for loading */
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .pulse {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      /* Custom checkbox */
+      .form-check-input {
+        background-color: var(--bg-darker);
+        border-color: var(--border-color);
+      }
+
+      .form-check-input:checked {
+        background-color: var(--accent-primary);
+        border-color: var(--accent-primary);
+      }
+
+      /* Tooltip customization */
+      .tooltip {
+        --bs-tooltip-bg: var(--bg-card);
+        --bs-tooltip-color: var(--text-primary);
+      }
+
+      /* Status indicators */
+      .status-indicator {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+
+      .status-online {
+        background-color: var(--accent-success);
+        box-shadow: 0 0 8px var(--accent-success);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 992px) {
+        .container {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+
+        #detailsModal .modal-body dl {
+          grid-template-columns: 1fr;
+          gap: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-4">
+      <header class="text-center mb-5">
+        <h1 class="display-5 fw-bold mb-3 text-gradient">
+          <i class="bi bi-shield-lock-fill me-2"></i>CyberShield
+        </h1>
+        <p class="lead text-muted">Advanced IP & VPN Threat Detection System</p>
+        <div
+          class="d-flex justify-content-center align-items-center gap-2 mb-3"
+        >
+          <span class="status-indicator status-online"></span>
+          <small class="text-success">API Connected</small>
+        </div>
+      </header>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card h-100 border-0">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h2 class="h5 mb-0">
+                <i class="bi bi-search me-2"></i>IP Analysis
+              </h2>
+              <span class="badge bg-dark">v2.1.0</span>
+            </div>
+            <div class="card-body">
+              <form id="checkForm" class="mb-4">
+                <div class="mb-4">
+                  <label for="ipInput" class="form-label fw-semibold"
+                    >Enter IP Address</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control form-control-lg"
+                    id="ipInput"
+                    placeholder="e.g. 192.168.1.1 or leave blank for your IP"
+                  />
+                  <div class="form-text text-muted mt-1">
+                    We'll analyze the IP for VPN, proxy, or Tor usage
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg w-100"
+                  id="checkBtn"
+                >
+                  <span id="checkBtnText"
+                    ><i class="bi bi-shield-check"></i> Analyze IP</span
+                  >
+                  <span
+                    id="checkSpinner"
+                    class="spinner-border spinner-border-sm d-none"
+                    role="status"
+                  ></span>
+                </button>
+              </form>
+
+              <div
+                class="card bg-dark border-0 fade-in"
+                id="resultCard"
+                style="display: none"
+              >
+                <div class="card-header">
+                  <h3 class="h6 mb-0">
+                    <i class="bi bi-activity me-2"></i>Analysis Results
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-3 me-3">
+                          <i class="bi bi-globe fs-4 text-primary"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted d-block">IP Address</small>
+                          <strong
+                            id="ipAddress"
+                            class="d-block text-truncate"
+                          ></strong>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-3 me-3">
+                          <i class="bi bi-geo-alt fs-4 text-info"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted d-block">Location</small>
+                          <strong id="location" class="d-block"></strong>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-3 me-3">
+                          <i class="bi bi-building fs-4 text-warning"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted d-block">ISP</small>
+                          <strong
+                            id="isp"
+                            class="d-block text-truncate"
+                          ></strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-3 me-3">
+                          <i class="bi bi-diagram-3 fs-4 text-secondary"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted d-block">ASN</small>
+                          <strong id="asn" class="d-block"></strong>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-3 me-3">
+                          <i class="bi bi-ethernet fs-4"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted d-block">IP Type</small>
+                          <strong id="ipType" class="d-block"></strong>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark rounded p-3 me-3">
+                          <i class="bi bi-shield-shaded fs-4"></i>
+                        </div>
+                        <div>
+                          <small class="text-muted d-block"
+                            >Threat Status</small
+                          >
+                          <strong id="vpnStatus" class="d-block"></strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-3 pt-3 border-top border-secondary">
+                    <small class="text-muted">Analysis performed at</small>
+                    <div id="checkTime" class="fw-semibold"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card h-100 border-0">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h2 class="h5 mb-0">
+                <i class="bi bi-clock-history me-2"></i>Scan History
+              </h2>
+              <div>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  id="refreshHistory"
+                  data-bs-toggle="tooltip"
+                  title="Refresh history"
+                >
+                  <i class="bi bi-arrow-clockwise"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-borderless table-hover align-middle">
+                  <thead>
+                    <tr class="border-bottom border-secondary">
+                      <th>IP Address</th>
+                      <th>Location</th>
+                      <th class="text-center">Status</th>
+                      <th class="text-end">Time</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="historyBody" class="border-top-0">
+                    <tr>
+                      <td colspan="5" class="text-center py-4">
+                        <div class="pulse">
+                          <i class="bi bi-arrow-repeat fs-4 text-muted"></i>
+                          <div class="mt-2">Loading scan history...</div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer bg-dark text-muted py-2">
+              <small
+                >Total scans: <span id="totalScans">0</span> | Last updated:
+                <span id="lastUpdated">Just now</span></small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0">
+          <div class="modal-header">
+            <h5 class="modal-title d-flex align-items-center">
+              <i class="bi bi-info-circle-fill text-primary me-2"></i>
+              <span>Detailed IP Analysis</span>
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="modalBody">
+              <div class="text-center py-4">
+                <div class="pulse">
+                  <i class="bi bi-arrow-repeat fs-3 text-muted"></i>
+                  <div class="mt-2">Loading detailed analysis...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-lg me-1"></i> Close
+            </button>
+            <button type="button" class="btn btn-primary" id="exportDetails">
+              <i class="bi bi-download me-1"></i> Export
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Initialize tooltips
+      document.addEventListener("DOMContentLoaded", function () {
+        const tooltipTriggerList = [].slice.call(
+          document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        loadHistory();
+
+        document
+          .getElementById("checkForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            checkIP();
+          });
+
+        document
+          .getElementById("refreshHistory")
+          .addEventListener("click", function () {
+            loadHistory(true);
+          });
+
+        document
+          .getElementById("exportDetails")
+          .addEventListener("click", exportDetails);
+      });
+
+      function checkIP() {
+        const ipInput = document.getElementById("ipInput").value.trim();
+        const checkBtn = document.getElementById("checkBtn");
+        const checkBtnText = document.getElementById("checkBtnText");
+        const checkSpinner = document.getElementById("checkSpinner");
+        const resultCard = document.getElementById("resultCard");
+
+        checkBtn.disabled = true;
+        checkBtnText.innerHTML =
+          '<i class="bi bi-hourglass-top me-1"></i> Analyzing...';
+        checkSpinner.classList.remove("d-none");
+        resultCard.style.display = "none";
+
+        const formData = new FormData();
+        if (ipInput) formData.append("ip", ipInput);
+
+        fetch("/check_ip", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.json().then((err) => {
+                throw new Error(err.error || "Server error");
+              });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Update basic info
+            document.getElementById("ipAddress").textContent = data.ip;
+            document.getElementById("location").textContent = data.location;
+            document.getElementById("isp").textContent = data.isp || "Unknown";
+            document.getElementById("asn").textContent = data.asn || "N/A";
+
+            // Update IP type with styling
+            const ipTypeElement = document.getElementById("ipType");
+            ipTypeElement.textContent = data.ip_type;
+            ipTypeElement.className = `ip-type-${data.ip_type.toLowerCase()}`;
+
+            // Update threat status
+            const vpnStatus = document.getElementById("vpnStatus");
+            if (data.is_vpn || data.is_proxy || data.is_tor) {
+              let badges = [];
+              if (data.is_vpn)
+                badges.push('<span class="badge badge-vpn me-1">VPN</span>');
+              if (data.is_proxy)
+                badges.push(
+                  '<span class="badge badge-proxy me-1">Proxy</span>'
+                );
+              if (data.is_tor)
+                badges.push('<span class="badge badge-tor me-1">Tor</span>');
+
+              vpnStatus.innerHTML = `Threat Detected ${badges.join("")}`;
+              vpnStatus.className = "vpn-detected";
+            } else {
+              vpnStatus.innerHTML =
+                '<span class="badge badge-clean">Secure</span>';
+              vpnStatus.className = "no-vpn";
+            }
+
+            // Update timestamp
+            const now = new Date(data.check_time || new Date());
+            document.getElementById("checkTime").textContent =
+              now.toLocaleString();
+
+            // Show results with animation
+            resultCard.style.display = "block";
+            resultCard.classList.add("fade-in");
+
+            // Refresh history
+            loadHistory();
+          })
+          .catch((error) => {
+            // Show error alert with nice styling
+            const alert = document.createElement("div");
+            alert.className =
+              "alert alert-danger d-flex align-items-center fade-in";
+            alert.innerHTML = `
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <div>Error analyzing IP: ${error.message}</div>
+                `;
+
+            const cardBody = document.querySelector(".card-body");
+            cardBody.insertBefore(alert, cardBody.firstChild);
+
+            // Auto-remove alert after 5 seconds
+            setTimeout(() => {
+              alert.classList.remove("fade-in");
+              alert.classList.add("fade");
+              setTimeout(() => alert.remove(), 300);
+            }, 5000);
+          })
+          .finally(() => {
+            checkBtn.disabled = false;
+            checkBtnText.innerHTML =
+              '<i class="bi bi-shield-check me-1"></i> Analyze IP';
+            checkSpinner.classList.add("d-none");
+          });
+      }
+
+      function loadHistory(showLoading = false) {
+        const historyBody = document.getElementById("historyBody");
+        const refreshBtn = document.getElementById("refreshHistory");
+
+        if (showLoading) {
+          historyBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <div class="pulse">
+                                <i class="bi bi-arrow-repeat fs-4 text-muted"></i>
+                                <div class="mt-2">Refreshing history...</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+        }
+
+        refreshBtn.disabled = true;
+        refreshBtn.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
+
+        fetch("/get_history")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              throw new Error(data.error);
+            }
+
+            if (data.length === 0) {
+              historyBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="bi bi-database-exclamation fs-4"></i>
+                                <div class="mt-2">No scan history yet</div>
+                            </td>
+                        </tr>
+                    `;
+              return;
+            }
+
+            // Update stats
+            document.getElementById("totalScans").textContent = data.length;
+            document.getElementById("lastUpdated").textContent = "Just now";
+
+            // Build history rows
+            let html = "";
+            data.forEach((item, index) => {
+              if (index > 50) return; // Limit to 50 most recent
+
+              const date = new Date(item.last_check);
+              const timeString = date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
+              html += `
+                        <tr class="fade-in" style="animation-delay: ${
+                          index * 0.05
+                        }s">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-dark rounded-pill me-2">${
+                                      index + 1
+                                    }</span>
+                                    <span class="font-monospace">${
+                                      item.ip
+                                    }</span>
+                                </div>
+                            </td>
+                            <td class="text-truncate" style="max-width: 150px" title="${
+                              item.location
+                            }">
+                                ${item.location.split(",")[0] || "Unknown"}
+                            </td>
+                            <td class="text-center">
+                                ${
+                                  item.is_vpn
+                                    ? '<span class="badge bg-danger bg-opacity-10 text-danger">Risky</span>'
+                                    : '<span class="badge bg-success bg-opacity-10 text-success">Clean</span>'
+                                }
+                            </td>
+                            <td class="text-end text-muted">
+                                <small>${timeString}</small>
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="showDetails('${
+                                  item.ip
+                                }')">
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+            });
+
+            historyBody.innerHTML = html;
+          })
+          .catch((error) => {
+            historyBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-danger">
+                            <i class="bi bi-exclamation-octagon-fill fs-4"></i>
+                            <div class="mt-2">Failed to load history: ${error.message}</div>
+                        </td>
+                    </tr>
+                `;
+          })
+          .finally(() => {
+            refreshBtn.disabled = false;
+            refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+          });
+      }
+
+      function showDetails(ip) {
+        const modalBody = document.getElementById("modalBody");
+        const modal = new bootstrap.Modal(
+          document.getElementById("detailsModal")
+        );
+
+        modalBody.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="pulse">
+                        <i class="bi bi-arrow-repeat fs-3 text-muted"></i>
+                        <div class="mt-2">Loading detailed analysis...</div>
+                    </div>
+                </div>
+            `;
+
+        modal.show();
+
+        fetch(`/check_ip?ip=${encodeURIComponent(ip)}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              throw new Error(data.error);
+            }
+
+            let badges = [];
+            if (data.is_vpn)
+              badges.push('<span class="badge badge-vpn me-2">VPN</span>');
+            if (data.is_proxy)
+              badges.push('<span class="badge badge-proxy me-2">Proxy</span>');
+            if (data.is_tor)
+              badges.push('<span class="badge badge-tor me-2">Tor</span>');
+
+            const privacyStatus =
+              badges.length > 0
+                ? `<div class="mb-3">${badges.join("")}</div>`
+                : '<span class="badge badge-clean">No threats detected</span>';
+
+            modalBody.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card bg-dark mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted mb-3">NETWORK INFORMATION</h6>
+                                    <dl>
+                                        <dt>IP Address</dt>
+                                        <dd class="font-monospace mb-2">${
+                                          data.ip
+                                        }</dd>
+                                        
+                                        <dt>Location</dt>
+                                        <dd class="mb-2">${data.location}</dd>
+                                        
+                                        <dt>ISP</dt>
+                                        <dd class="mb-2">${
+                                          data.isp || "Unknown"
+                                        }</dd>
+                                        
+                                        <dt>ASN</dt>
+                                        <dd class="font-monospace">${
+                                          data.asn || "N/A"
+                                        }</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card bg-dark mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted mb-3">THREAT ANALYSIS</h6>
+                                    <dl>
+                                        <dt>IP Type</dt>
+                                        <dd class="ip-type-${data.ip_type.toLowerCase()} mb-2">
+                                            ${data.ip_type}
+                                        </dd>
+                                        
+                                        <dt>Security Status</dt>
+                                        <dd class="mb-2">
+                                            ${privacyStatus}
+                                        </dd>
+                                        
+                                        <dt>Last Analyzed</dt>
+                                        <dd>${new Date(
+                                          data.check_time
+                                        ).toLocaleString()}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-dark mt-3">
+                        <div class="card-body">
+                            <h6 class="card-title text-muted mb-3">PRIVACY FLAGS</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                ${Object.entries(data.privacy_flags || {})
+                                  .map(
+                                    ([key, val]) => `
+                                    <div class="bg-dark rounded p-2 border border-secondary">
+                                        <small class="text-muted d-block">${key.replace(
+                                          /_/g,
+                                          " "
+                                        )}</small>
+                                        <strong class="${
+                                          val ? "text-danger" : "text-success"
+                                        }">
+                                            ${val.toString()}
+                                        </strong>
+                                    </div>
+                                `
+                                  )
+                                  .join("")}
+                            </div>
+                        </div>
+                    </div>
+                `;
+          })
+          .catch((error) => {
+            modalBody.innerHTML = `
+                    <div class="alert alert-danger d-flex align-items-center">
+                        <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                        <div>Error loading details: ${error.message}</div>
+                    </div>
+                `;
+          });
+      }
+
+      function exportDetails() {
+        const modalBody = document.getElementById("modalBody");
+        const ip = modalBody.querySelector("dd")?.textContent || "unknown-ip";
+        const html = modalBody.innerHTML;
+
+        // Create a blob with the HTML content
+        const blob = new Blob(
+          [
+            `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>IP Analysis Report - ${ip}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+                        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+                        .badge-vpn { background-color: #dc3545; color: white; }
+                        .badge-proxy { background-color: #ffc107; color: black; }
+                        .badge-tor { background-color: #6f42c1; color: white; }
+                        .badge-clean { background-color: #28a745; color: white; }
+                        dt { font-weight: bold; margin-top: 8px; }
+                        .text-muted { color: #6c757d; }
+                    </style>
+                </head>
+                <body>
+                    <h1>IP Analysis Report</h1>
+                    <p>Generated on ${new Date().toLocaleString()}</p>
+                    ${html}
+                </body>
+                </html>
+            `,
+          ],
+          { type: "text/html" }
+        );
+
+        // Create download link
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `ip-analysis-${ip}-${
+          new Date().toISOString().split("T")[0]
+        }.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
+</html>
